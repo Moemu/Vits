@@ -8,7 +8,16 @@ from text.thai import num_to_thai, latin_to_thai
 from text.shanghainese import shanghainese_to_ipa
 from text.cantonese import cantonese_to_ipa
 from text.ngu_dialect import ngu_dialect_to_ipa
+from .numbers import normalize_numbers
 
+def english_cleaners(text):
+  '''Pipeline for English text, including number and abbreviation expansion.'''
+  text = convert_to_ascii(text)
+  text = lowercase(text)
+  text = normalize_numbers(text)
+  text = expand_abbreviations(text)
+  text = collapse_whitespace(text)
+  return text
 
 def japanese_cleaners(text):
     text = japanese_to_romaji_with_accent(text)
